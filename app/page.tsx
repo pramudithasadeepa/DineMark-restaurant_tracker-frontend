@@ -1,65 +1,170 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import Link from 'next/link';
+import LandingHeader from '@/components/LandingHeader';
+
+const features = [
+  {
+    icon: '📝',
+    title: 'Log Every Meal',
+    description:
+      'Keep a record of every restaurant you visit — what you ate, when, and with whom.',
+  },
+  {
+    icon: '⭐',
+    title: 'Rate & Review',
+    description:
+      'Rate your experience, write reviews, and remember what dishes you loved most.',
+  },
+  {
+    icon: '🗺️',
+    title: 'Wishlist & Explore',
+    description: 'Save restaurants you want to try and never forget a food spot again.',
+  },
+];
+
+const steps = [
+  {
+    number: 1,
+    title: 'Create Account',
+    description: 'Sign up for free in under a minute',
+  },
+  {
+    number: 2,
+    title: 'Add Restaurants',
+    description: "Log places you've visited or want to try",
+  },
+  {
+    number: 3,
+    title: 'Review & Remember',
+    description: 'Add ratings, reviews, and track your favorites',
+  },
+];
+
+const stats = [
+  '500+ Restaurants Tracked',
+  '1,000+ Happy Foodies',
+  '50+ Cities Covered',
+];
+
+export default function WelcomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="bg-[#FFF9F2] text-slate-900">
+      <LandingHeader />
+
+      {/* Hero */}
+      <section className="px-6 pb-20 pt-12 text-center md:px-8 md:pb-28 md:pt-16">
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-8 inline-flex items-center gap-2 rounded-full bg-[#FFE8D6] px-4 py-2 text-sm font-medium text-[#E85D04]">
+            <span aria-hidden>✨</span>
+            Your Food Journey Starts Here
           </p>
+
+          <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl">
+            Your Personal
+            <br />
+            <span className="text-[#FF4D20]">Restaurant Diary</span>
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg">
+            Every meal you love, dated and remembered. Track restaurants, save favorites, and
+            rediscover your culinary adventures one bite at a time.
+          </p>
+
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link href="/register" className="btn-dinemark gap-1 px-8 py-4 text-base">
+              Start your diary — it&apos;s free
+              <span aria-hidden>›</span>
+            </Link>
+            <Link href="/login" className="btn-dinemark-outline min-w-[140px]">
+              Sign in
+            </Link>
+          </div>
+
+          <ul className="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-8">
+            {stats.map((stat) => (
+              <li key={stat} className="flex items-center gap-2 text-sm text-slate-600">
+                <span className="font-bold text-[#FF4D20]">✓</span>
+                {stat}
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="bg-white px-6 py-20 md:px-8 md:py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-14 text-center">
+            <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
+              Everything you need to track your food adventures
+            </h2>
+            <p className="mt-4 text-slate-600">
+              Simple, beautiful, and made for food lovers like you
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition hover:shadow-md"
+              >
+                <span className="text-4xl" role="img" aria-hidden>
+                  {feature.icon}
+                </span>
+                <h3 className="mt-5 text-xl font-bold text-slate-900">{feature.title}</h3>
+                <p className="mt-3 leading-relaxed text-slate-600">{feature.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* How it works */}
+      <section
+        id="how-it-works"
+        className="bg-[#FFFBF5] px-6 py-20 md:px-8 md:py-24"
+        style={{
+          backgroundImage: 'radial-gradient(ellipse at center, #FFFCF7 0%, #FFFBF5 70%)',
+        }}
+      >
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-14 text-center">
+            <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">How DineMark Works</h2>
+            <p className="mt-4 text-slate-600">Three simple steps to start your food diary</p>
+          </div>
+
+          <div className="grid gap-12 md:grid-cols-3">
+            {steps.map((step) => (
+              <div key={step.number} className="text-center">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#FF4D20] text-xl font-bold text-white shadow-lg shadow-orange-500/30">
+                  {step.number}
+                </div>
+                <h3 className="mt-6 text-xl font-bold text-slate-900">{step.title}</h3>
+                <p className="mt-3 text-slate-600">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-gradient-to-r from-[#FF5F00] to-[#FF3B3B] px-6 py-20 text-center text-white md:px-8 md:py-24">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-3xl font-bold md:text-4xl">Ready to start your food diary?</h2>
+          <p className="mt-4 text-lg text-white/90">
+            Join thousands of food lovers who track their culinary adventures with DineMark
+          </p>
+          <Link
+            href="/register"
+            className="mt-8 inline-block rounded-lg bg-white px-10 py-4 text-base font-bold text-[#FF4D20] shadow-lg transition hover:bg-orange-50"
+          >
+            Get Started — It&apos;s Free
+          </Link>
+          <p className="mt-4 text-sm text-white/80">No credit card required • Free forever</p>
+        </div>
+      </section>
     </div>
   );
 }
