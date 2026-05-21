@@ -108,8 +108,6 @@ export default function RestaurantDashboard({
   ]);
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this restaurant?')) return;
-
     try {
       await deleteRestaurant(id);
       toast.success('Restaurant deleted successfully!');
