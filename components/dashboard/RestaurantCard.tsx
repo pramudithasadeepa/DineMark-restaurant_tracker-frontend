@@ -85,7 +85,7 @@ function CardImage({ restaurant }: { restaurant: Restaurant }) {
 
 export default function RestaurantCard({ restaurant, onDelete }: RestaurantCardProps) {
   return (
-    <article className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:shadow-md">
+    <article className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition duration-300 ease-out hover:scale-[1.03] hover:shadow-lg">
       <CardImage restaurant={restaurant} />
 
       <div className="p-6">
