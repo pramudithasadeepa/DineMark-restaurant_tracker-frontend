@@ -49,18 +49,17 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-200/90 bg-white/95 shadow-sm backdrop-blur-sm">
-        <div className="grid h-14 w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-3 sm:gap-4 sm:px-4">
+        <div className="grid h-16 w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-3 sm:gap-4 sm:px-4">
           {/* Left: logo */}
           <div className="min-w-0 justify-self-start overflow-hidden">
             <DineMarkLogo
               href="/dashboard"
-              className="[&_span:first-child]:h-8 [&_span:first-child]:w-8 [&_span:first-child]:text-sm [&_span:last-child]:text-lg"
-            />
-          </div>
+              />
+              </div>
 
           {/* Center: navigation */}
           <nav
-            className="flex shrink-0 items-center gap-0.5 whitespace-nowrap sm:gap-1"
+            className="flex shrink-0 items-center gap-10 whitespace-nowrap sm:gap-2"
             aria-label="Main"
           >
             {tabs.map((tab) => {
