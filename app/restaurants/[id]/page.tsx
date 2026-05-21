@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { toast } from 'react-toastify';
 import api, { updateRestaurant } from '@/lib/api';
 import RestaurantForm, {
   type RestaurantFormData,
@@ -57,9 +58,10 @@ export default function EditRestaurant() {
         priceRange: form.priceRange || 'medium',
         imageUrl: form.imageUrl || undefined,
       });
+      toast.success('Restaurant updated successfully!');
       router.push('/dashboard');
     } catch {
-      alert('Error updating restaurant');
+      toast.error('Failed to update restaurant. Please try again.');
       setSaving(false);
     }
   };

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { login, register } from "@/lib/api";
 import AuthSplitLayout from "@/components/auth/AuthSplitLayout";
 import AuthLogo from "@/components/auth/AuthLogo";
@@ -54,6 +54,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
       const res = await login({ email: loginEmail, password: loginPassword });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      toast.success("Logged in successfully! Welcome back.");
       router.push("/dashboard");
     } catch (err: unknown) {
       const message =
@@ -61,7 +62,9 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
           ? (err as { response?: { data?: { message?: string } } }).response
               ?.data?.message
           : undefined;
-      setLoginError(message || "Invalid credentials");
+      const errorMessage = message || "Invalid credentials";
+      setLoginError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoginLoading(false);
     }
@@ -93,7 +96,9 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
           ? (err as { response?: { data?: { message?: string } } }).response
               ?.data?.message
           : undefined;
-      setRegisterError(message || "Registration failed");
+      const errorMessage = message || "Registration failed";
+      setRegisterError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setRegisterLoading(false);
     }
@@ -126,7 +131,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
             <div className="mt-8 space-y-5">
               <GoogleSignInButton
                 onClick={() =>
-                  toast("Google sign-in is not configured yet.", { icon: "ℹ️" })
+                  toast.info("Google sign-in is not configured yet.")
                 }
               />
 
@@ -167,9 +172,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                       type="button"
                       className="text-sm font-medium text-[#F97316] hover:text-[#EA580C]"
                       onClick={() =>
-                        toast("Password reset is not available yet.", {
-                          icon: "ℹ️",
-                        })
+                        toast.info("Password reset is not available yet.")
                       }
                     >
                       Forgot password?
@@ -222,7 +225,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
             <div className="mt-8 space-y-5">
               <GoogleSignInButton
                 onClick={() =>
-                  toast("Google sign-in is not configured yet.", { icon: "ℹ️" })
+                  toast.info("Google sign-in is not configured yet.")
                 }
               />
 

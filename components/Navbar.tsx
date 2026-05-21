@@ -58,7 +58,7 @@ export default function Navbar() {
 
           {/* Center: navigation */}
           <nav
-            className="flex shrink-0 items-center gap-10 whitespace-nowrap sm:gap-2"
+            className="flex shrink-0 items-center gap-10 whitespace-nowrap sm:gap-5"
             aria-label="Main"
           >
             {tabs.map((tab) => {
@@ -67,10 +67,10 @@ export default function Navbar() {
                 <Link
                   key={tab.href}
                   href={tab.href}
-                  className={`rounded-md px-2.5 py-1.5 text-xs font-medium transition sm:px-3.5 sm:text-sm ${
+                  className={`rounded-md px-2.5 py-1.5 text-xs font-bold transition sm:px-3.5 sm:text-sm ${
                     active
                       ? "bg-white/70 text-[#F97316] shadow-sm"
-                      : "text-black hover:bg-white/50 hover:text-slate-900"
+                      : "text-black  hover:bg-white/50 hover:-translate-y-1 hover:text-orange-400 "
                   }`}
                 >
                   {tab.label}
