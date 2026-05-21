@@ -147,7 +147,7 @@ export default function RestaurantDashboard({
           <h2 className="text-2xl font-bold text-slate-900">{sectionTitle}</h2>
           <Link
             href="/restaurants/add"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#F97316] px-5 py-2.5 text-sm font-semibold text-[#F97316] transition hover:bg-[#FFF0E6]"
+            className="btn-dinemark gap-2 px-5 py-2.5 text-sm"
           >
             <span className="text-lg leading-none">+</span>
             Add restaurant
