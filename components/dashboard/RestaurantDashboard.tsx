@@ -15,12 +15,14 @@ type RestaurantDashboardProps = {
   statusFilter: StatusFilterMode;
   sectionTitle: string;
   emptyMessage: string;
+  showStatCards?: boolean;
 };
 
 export default function RestaurantDashboard({
   statusFilter,
   sectionTitle,
   emptyMessage,
+  showStatCards = false,
 }: RestaurantDashboardProps) {
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
@@ -124,9 +126,9 @@ export default function RestaurantDashboard({
   return (
     <div className="min-h-full bg-[#FFF9F2]">
       <div className="mx-auto max-w-6xl px-4 py-8 md:px-6">
-        <StatCards stats={stats} />
+        {showStatCards && <StatCards stats={stats} />}
 
-        <div className="mt-6">
+        <div className={showStatCards ? 'mt-6' : undefined}>
           <SearchFilters
             searchTerm={searchTerm}
             cuisineFilter={cuisineFilter}
