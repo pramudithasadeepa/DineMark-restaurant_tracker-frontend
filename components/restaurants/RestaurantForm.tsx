@@ -1,6 +1,14 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import {
+  Bookmark,
+  ChefHat,
+  ChevronDown,
+  MapPin,
+  UtensilsCrossed,
+  X,
+} from 'lucide-react';
 
 export type RestaurantFormData = {
   name: string;
@@ -56,54 +64,7 @@ function InputWrap({ icon, children }: { icon: ReactNode; children: ReactNode })
   );
 }
 
-function UtensilsIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
-      <path d="M8 3v8M5 3v5a3 3 0 0 0 6 0V3M11 11v10M16 3v18M19 3v5a3 3 0 0 1-6 0V3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function ChefHatIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
-      <path d="M6 13h12l-1 8H7l-1-8ZM4 13c0-3.3 2.7-6 6-6 1.5 0 2.9.6 4 1.5 1.1-.9 2.5-1.5 4-1.5 3.3 0 6 2.7 6 6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function MapPinIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
-      <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="12" cy="10" r="2.5" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function XIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function BookmarkIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16Z" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const fieldIconClass = 'h-4 w-4';
 
 export default function RestaurantForm({
   title,
@@ -131,7 +92,7 @@ export default function RestaurantForm({
           <div className="bg-gradient-to-br from-[#FF8A00] via-[#FF6B35] to-[#FF3D3B] px-6 py-7 md:px-8 md:py-8">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white backdrop-blur-sm">
-                <UtensilsIcon />
+                <UtensilsCrossed className={`${fieldIconClass} text-white`} aria-hidden />
               </div>
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/85">
@@ -149,7 +110,7 @@ export default function RestaurantForm({
             <div className="space-y-5 p-6 md:p-8">
               <div>
                 <Label required>Restaurant Name</Label>
-                <InputWrap icon={<UtensilsIcon />}>
+                <InputWrap icon={<UtensilsCrossed className={fieldIconClass} aria-hidden />}>
                   <input
                     type="text"
                     className={`${inputClass} pl-10`}
@@ -164,7 +125,7 @@ export default function RestaurantForm({
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <Label required>Cuisine</Label>
-                  <InputWrap icon={<ChefHatIcon />}>
+                  <InputWrap icon={<ChefHat className={fieldIconClass} aria-hidden />}>
                     <input
                       type="text"
                       className={`${inputClass} pl-10`}
@@ -178,7 +139,7 @@ export default function RestaurantForm({
 
                 <div>
                   <Label required>Location</Label>
-                  <InputWrap icon={<MapPinIcon />}>
+                  <InputWrap icon={<MapPin className={fieldIconClass} aria-hidden />}>
                     <input
                       type="text"
                       className={`${inputClass} pl-10`}
@@ -206,7 +167,7 @@ export default function RestaurantForm({
                       <option value="expensive">$$$ Expensive (3000+ LKR)</option>
                     </select>
                     <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
-                      <ChevronDownIcon />
+                      <ChevronDown className={fieldIconClass} aria-hidden />
                     </span>
                   </div>
                 </div>
@@ -228,7 +189,7 @@ export default function RestaurantForm({
                       <option value="visited">Visited</option>
                     </select>
                     <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
-                      <ChevronDownIcon />
+                      <ChevronDown className={fieldIconClass} aria-hidden />
                     </span>
                   </div>
                 </div>
@@ -254,12 +215,12 @@ export default function RestaurantForm({
                         <option value="">Select...</option>
                         {[1, 2, 3, 4, 5].map((r) => (
                           <option key={r} value={r}>
-                            {'★'.repeat(r)} {r}/5
+                            {r} out of 5
                           </option>
                         ))}
                       </select>
                       <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
-                        <ChevronDownIcon />
+                        <ChevronDown className={fieldIconClass} aria-hidden />
                       </span>
                     </div>
                   </div>
@@ -324,7 +285,7 @@ export default function RestaurantForm({
                 onClick={onCancel}
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 sm:min-w-[120px]"
               >
-                <XIcon />
+                <X className={fieldIconClass} aria-hidden />
                 Cancel
               </button>
               <button
@@ -332,7 +293,7 @@ export default function RestaurantForm({
                 disabled={loading}
                 className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#FF8A00] to-[#FF3D3B] px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-orange-500/25 transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50 sm:max-w-none sm:flex-none sm:min-w-[200px]"
               >
-                <BookmarkIcon />
+                <Bookmark className={fieldIconClass} aria-hidden />
                 {loading ? 'Saving...' : submitLabel}
               </button>
             </div>

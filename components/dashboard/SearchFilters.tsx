@@ -1,3 +1,5 @@
+import { Search } from 'lucide-react';
+
 type SearchFiltersProps = {
   searchTerm: string;
   cuisineFilter: string;
@@ -27,9 +29,10 @@ export default function SearchFilters({
     <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
         <div className="relative lg:col-span-1">
-          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-            🔍
-          </span>
+          <Search
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+            aria-hidden
+          />
           <input
             type="text"
             placeholder="Search restaurants by name..."

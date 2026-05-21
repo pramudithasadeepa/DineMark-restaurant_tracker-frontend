@@ -1,5 +1,17 @@
 import Link from 'next/link';
+import {
+  Banknote,
+  ChefHat,
+  MapPin,
+  Pencil,
+  CircleDollarSign,
+  Trash2,
+  Check,
+  Star,
+  UtensilsCrossed,
+} from 'lucide-react';
 import { Restaurant } from '@/types';
+import StarRating from '@/components/StarRating';
 
 type RestaurantCardProps = {
   restaurant: Restaurant;
@@ -31,33 +43,19 @@ function PriceRangeDisplay({ range }: { range: string }) {
   );
 }
 
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <span className="inline-flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={star}
-          className={star <= Math.round(rating) ? 'text-amber-400' : 'text-slate-200'}
-        >
-          ★
-        </span>
-      ))}
-      <span className="ml-1 text-sm text-slate-600">{rating}/5</span>
-    </span>
-  );
-}
-
 function StatusBadge({ status }: { status: Restaurant['status'] }) {
   if (status === 'visited') {
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-green-500 px-3 py-1 text-xs font-medium text-white">
-        <span aria-hidden>✓</span> Visited
+        <Check className="h-3.5 w-3.5" strokeWidth={2.5} aria-hidden />
+        Visited
       </span>
     );
   }
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-[#F97316] px-3 py-1 text-xs font-medium text-white">
-      <span aria-hidden>★</span> Want to Try
+      <Star className="h-3.5 w-3.5 fill-white" aria-hidden />
+      Want to Try
     </span>
   );
 }
@@ -73,39 +71,31 @@ export default function RestaurantCard({ restaurant, onDelete }: RestaurantCardP
 
         <ul className="mt-4 space-y-2.5 text-sm text-slate-600">
           <li className="flex items-center gap-2">
-            <span className="text-slate-400" aria-hidden>
-              👨‍🍳
-            </span>
+            <ChefHat className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
             {restaurant.cuisine}
           </li>
           <li className="flex items-center gap-2">
-            <span className="text-slate-400" aria-hidden>
-              📍
-            </span>
+            <MapPin className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
             {restaurant.location}
           </li>
           <li className="flex items-center gap-2">
-            <span className="text-slate-400" aria-hidden>
-              💲
-            </span>
+            <CircleDollarSign className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
             <PriceRangeDisplay range={restaurant.priceRange} />
           </li>
           {restaurant.rating != null && restaurant.rating > 0 && (
             <li className="flex items-center gap-2">
-              <StarRating rating={restaurant.rating} />
+              <StarRating rating={restaurant.rating} showValue />
             </li>
           )}
           {restaurant.recommendedDish && (
             <li className="flex items-center gap-2">
-              <span className="text-slate-400" aria-hidden>
-                🍽️
-              </span>
+              <UtensilsCrossed className="h-4 w-4 shrink-0 text-slate-400" aria-hidden />
               {restaurant.recommendedDish}
             </li>
           )}
           {restaurant.pricePaid != null && restaurant.pricePaid > 0 && (
             <li className="flex items-center gap-2 font-medium text-green-600">
-              <span aria-hidden>💵</span>
+              <Banknote className="h-4 w-4 shrink-0" aria-hidden />
               Rs. {restaurant.pricePaid.toLocaleString()}
             </li>
           )}
@@ -116,14 +106,16 @@ export default function RestaurantCard({ restaurant, onDelete }: RestaurantCardP
             href={`/restaurants/${restaurant.id}`}
             className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-blue-500 py-2.5 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
           >
-            <span aria-hidden>✏️</span> Edit
+            <Pencil className="h-4 w-4" aria-hidden />
+            Edit
           </Link>
           <button
             type="button"
             onClick={() => onDelete(restaurant.id)}
             className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-red-500 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
           >
-            <span aria-hidden>🗑️</span> Delete
+            <Trash2 className="h-4 w-4" aria-hidden />
+            Delete
           </button>
         </div>
       </div>

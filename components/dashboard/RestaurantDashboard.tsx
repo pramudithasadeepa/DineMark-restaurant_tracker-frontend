@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { getRestaurants, deleteRestaurant } from '@/lib/api';
 import { Restaurant } from '@/types';
 import StatCards from '@/components/dashboard/StatCards';
@@ -159,9 +160,10 @@ export default function RestaurantDashboard({
             <p className="text-slate-500">{emptyMessage}</p>
             <Link
               href="/restaurants/add"
-              className="mt-4 inline-block text-sm font-semibold text-[#F97316] hover:underline"
+              className="mt-4 inline-flex items-center justify-center gap-1 text-sm font-semibold text-[#F97316] hover:underline"
             >
-              Add your first restaurant →
+              Add your first restaurant
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>
         ) : (

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { LogOut } from "lucide-react";
 import DineMarkLogo from "@/components/DineMarkLogo";
 
 const tabs = [
@@ -88,7 +89,7 @@ export default function Navbar() {
               onClick={handleLogout}
               className="btn-dinemark shrink-0 gap-1 px-3 py-1.5 text-xs sm:gap-1.5 sm:px-4 sm:py-2 sm:text-sm"
             >
-              <span aria-hidden>→</span>
+              <LogOut className="h-4 w-4" aria-hidden />
               Logout
             </button>
           </div>
