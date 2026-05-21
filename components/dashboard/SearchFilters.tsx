@@ -62,6 +62,7 @@ export default function SearchFilters({
           <option value="budget">$ Budget</option>
           <option value="medium">$$ Medium</option>
           <option value="expensive">$$$ Expensive</option>
+          <option value="very_expensive">$$$$ Very Expensive</option>
         </select>
         {showStatusFilter ? (
           <select

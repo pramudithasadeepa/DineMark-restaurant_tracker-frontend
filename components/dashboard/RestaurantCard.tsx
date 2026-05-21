@@ -40,10 +40,25 @@ function PriceRangeDisplay({ range }: { range: string }) {
       </span>
     );
   }
+  if (range === 'very_expensive') {
+    return (
+      <span className="text-red-600">
+        <span className="font-semibold">$$$$</span>{' '}
+        <span className="text-slate-600">Very Expensive</span>
+      </span>
+    );
+  }
+  if (range === 'expensive') {
+    return (
+      <span className="text-purple-600">
+        <span className="font-semibold">$$$</span>{' '}
+        <span className="text-slate-600">Expensive</span>
+      </span>
+    );
+  }
   return (
-    <span className="text-purple-600">
-      <span className="font-semibold">$$$</span>{' '}
-      <span className="text-slate-600">Expensive</span>
+    <span className="text-slate-500">
+      <span className="text-slate-600">—</span>
     </span>
   );
 }

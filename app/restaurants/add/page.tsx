@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import { appToast } from '@/lib/appToast';
 import { addRestaurant } from '@/lib/api';
 import RestaurantForm, {
   type RestaurantFormData,
@@ -37,10 +37,10 @@ export default function AddRestaurant() {
         priceRange: form.priceRange || 'medium',
         imageUrl: form.imageUrl || undefined,
       });
-      toast.success('Restaurant added successfully!');
+      appToast.add.success('Restaurant added successfully!');
       router.push('/dashboard');
     } catch {
-      toast.error('Failed to add restaurant. Please try again.');
+      appToast.add.error('Failed to add restaurant. Please try again.');
       setLoading(false);
     }
   };

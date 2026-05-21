@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "react-toastify";
+import { appToast } from "@/lib/appToast";
 import { login, register } from "@/lib/api";
 import AuthSplitLayout from "@/components/auth/AuthSplitLayout";
 import AuthLogo from "@/components/auth/AuthLogo";
@@ -41,7 +41,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
     }
     if (searchParams.get("registered") === "true") {
       setTab("login");
-      toast.success("Account created! Sign in to continue.");
+      appToast.login.success("Account created! Sign in to continue.");
     }
   }, [searchParams]);
 
@@ -54,7 +54,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
       const res = await login({ email: loginEmail, password: loginPassword });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      toast.success("Logged in successfully! Welcome back.");
+      appToast.login.success("Logged in successfully! Welcome back.");
       router.push("/dashboard");
     } catch (err: unknown) {
       const message =
@@ -64,7 +64,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
           : undefined;
       const errorMessage = message || "Invalid credentials";
       setLoginError(errorMessage);
-      toast.error(errorMessage);
+      appToast.login.error(errorMessage);
     } finally {
       setLoginLoading(false);
     }
@@ -89,7 +89,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
       });
       setTab("login");
       setRegisterError("");
-      toast.success("Account created! Sign in to continue.");
+      appToast.login.success("Account created! Sign in to continue.");
     } catch (err: unknown) {
       const message =
         err && typeof err === "object" && "response" in err
@@ -98,7 +98,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
           : undefined;
       const errorMessage = message || "Registration failed";
       setRegisterError(errorMessage);
-      toast.error(errorMessage);
+      appToast.login.error(errorMessage);
     } finally {
       setRegisterLoading(false);
     }
@@ -131,7 +131,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
             <div className="mt-8 space-y-5">
               <GoogleSignInButton
                 onClick={() =>
-                  toast.info("Google sign-in is not configured yet.")
+                  appToast.login.info("Google sign-in is not configured yet.")
                 }
               />
 
@@ -172,7 +172,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                       type="button"
                       className="text-sm font-medium text-[#F97316] hover:text-[#EA580C]"
                       onClick={() =>
-                        toast.info("Password reset is not available yet.")
+                        appToast.login.info("Password reset is not available yet.")
                       }
                     >
                       Forgot password?
@@ -225,7 +225,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
             <div className="mt-8 space-y-5">
               <GoogleSignInButton
                 onClick={() =>
-                  toast.info("Google sign-in is not configured yet.")
+                  appToast.login.info("Google sign-in is not configured yet.")
                 }
               />
 

@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { toast } from 'react-toastify';
+import { appToast } from '@/lib/appToast';
 import { getRestaurants, deleteRestaurant } from '@/lib/api';
 import { Restaurant } from '@/types';
 import StatCards from '@/components/dashboard/StatCards';
@@ -110,10 +110,10 @@ export default function RestaurantDashboard({
   const handleDelete = async (id: number) => {
     try {
       await deleteRestaurant(id);
-      toast.success('Restaurant deleted successfully!');
+      appToast.delete.success('Restaurant deleted successfully!');
       fetchRestaurants();
     } catch {
-      toast.error('Failed to delete restaurant. Please try again.');
+      appToast.delete.error('Failed to delete restaurant. Please try again.');
     }
   };
 

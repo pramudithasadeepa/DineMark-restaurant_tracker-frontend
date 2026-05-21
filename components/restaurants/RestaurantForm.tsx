@@ -81,6 +81,13 @@ function InputWrap({
 
 const fieldIconClass = "h-4 w-4";
 
+function priceRangeFromAmount(amount: number): string {
+  if (amount > 10000) return "very_expensive";
+  if (amount >= 3000) return "expensive";
+  if (amount >= 1000) return "medium";
+  return "budget";
+}
+
 export default function RestaurantForm({
   title,
   submitLabel,
@@ -336,7 +343,10 @@ export default function RestaurantForm({
                       <option value="budget">$ Budget (Under 1000 LKR)</option>
                       <option value="medium">$$ Medium (1000–3000 LKR)</option>
                       <option value="expensive">
-                        $$$ Expensive (3000+ LKR)
+                        $$$ Expensive (3000–10000 LKR)
+                      </option>
+                      <option value="very_expensive">
+                        $$$$ Very Expensive (Over 10000 LKR)
                       </option>
                     </select>
                     <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
@@ -449,14 +459,20 @@ export default function RestaurantForm({
                       className={`${inputClass} mt-1.5`}
                       placeholder="e.g., 2500"
                       value={form.pricePaid ?? ""}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const raw = e.target.value;
+                        if (!raw) {
+                          setForm({ ...form, pricePaid: undefined });
+                          return;
+                        }
+                        const amount = parseFloat(raw);
+                        if (Number.isNaN(amount)) return;
                         setForm({
                           ...form,
-                          pricePaid: e.target.value
-                            ? parseFloat(e.target.value)
-                            : undefined,
-                        })
-                      }
+                          pricePaid: amount,
+                          priceRange: priceRangeFromAmount(amount),
+                        });
+                      }}
                     />
                   </div>
                 </div>
