@@ -31,6 +31,7 @@ export default function EditRestaurant() {
           location: data.location ?? '',
           priceRange: data.priceRange ?? '',
           status: data.status ?? 'want_to_try',
+          imageUrl: data.imageUrl ?? '',
           rating: data.rating,
           review: data.review ?? '',
           whatIOrdered: data.whatIOrdered ?? '',
@@ -54,6 +55,7 @@ export default function EditRestaurant() {
       await updateRestaurant(Number(id), {
         ...form,
         priceRange: form.priceRange || 'medium',
+        imageUrl: form.imageUrl || undefined,
       });
       router.push('/dashboard');
     } catch {

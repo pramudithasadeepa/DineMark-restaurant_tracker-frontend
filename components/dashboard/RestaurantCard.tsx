@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Banknote,
   ChefHat,
@@ -60,9 +61,33 @@ function StatusBadge({ status }: { status: Restaurant['status'] }) {
   );
 }
 
+function CardImage({ restaurant }: { restaurant: Restaurant }) {
+  if (restaurant.imageUrl) {
+    return (
+      <div className="relative h-40 w-full">
+        <Image
+          src={restaurant.imageUrl}
+          alt={restaurant.name}
+          fill
+          className="rounded-t-2xl object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-40 w-full items-center justify-center rounded-t-2xl bg-gradient-to-br from-[#FFE8D6] to-[#FFF0E6]">
+      <UtensilsCrossed className="h-14 w-14 text-[#F97316]/60" strokeWidth={1.5} aria-hidden />
+    </div>
+  );
+}
+
 export default function RestaurantCard({ restaurant, onDelete }: RestaurantCardProps) {
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:shadow-md">
+      <CardImage restaurant={restaurant} />
+
       <div className="p-6">
         <div className="flex items-start justify-between gap-3">
           <h2 className="text-lg font-bold text-slate-900">{restaurant.name}</h2>

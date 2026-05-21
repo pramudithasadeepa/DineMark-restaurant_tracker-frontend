@@ -13,6 +13,7 @@ const initialForm: RestaurantFormData = {
   location: '',
   priceRange: '',
   status: 'want_to_try',
+  imageUrl: '',
   rating: undefined,
   review: '',
   whatIOrdered: '',
@@ -33,6 +34,7 @@ export default function AddRestaurant() {
       await addRestaurant({
         ...form,
         priceRange: form.priceRange || 'medium',
+        imageUrl: form.imageUrl || undefined,
       });
       router.push('/dashboard');
     } catch {

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import {
   BarChart3,
   Check,
@@ -20,6 +21,7 @@ type StatCardConfig = {
   icon: LucideIcon;
   iconBg: string;
   iconColor: string;
+  href?: string;
 };
 
 export default function StatCards({ stats }: StatCardsProps) {
@@ -44,6 +46,7 @@ export default function StatCards({ stats }: StatCardsProps) {
       icon: Check,
       iconBg: 'bg-green-100',
       iconColor: 'text-green-600',
+      href: '/visited',
     },
     {
       title: 'Want to Try',
@@ -53,6 +56,7 @@ export default function StatCards({ stats }: StatCardsProps) {
       icon: Star,
       iconBg: 'bg-amber-100',
       iconColor: 'text-amber-600',
+      href: '/want-to-try',
     },
     {
       title: 'Average Rating',
@@ -74,11 +78,8 @@ export default function StatCards({ stats }: StatCardsProps) {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {cards.map((card) => {
         const Icon = card.icon;
-        return (
-          <div
-            key={card.title}
-            className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
-          >
+        const content = (
+          <>
             <div>
               <p className="text-sm text-slate-500">{card.title}</p>
               <p className="mt-1 text-3xl font-bold text-slate-900">{card.value}</p>
@@ -89,6 +90,24 @@ export default function StatCards({ stats }: StatCardsProps) {
             >
               <Icon className={`h-6 w-6 ${card.iconColor}`} strokeWidth={2} aria-hidden />
             </div>
+          </>
+        );
+
+        const className = `flex items-center justify-between rounded-2xl border border-slate-100 bg-white p-5 shadow-sm${
+          card.href ? ' transition hover:border-slate-200 hover:shadow-md' : ''
+        }`;
+
+        if (card.href) {
+          return (
+            <Link key={card.title} href={card.href} className={className}>
+              {content}
+            </Link>
+          );
+        }
+
+        return (
+          <div key={card.title} className={className}>
+            {content}
           </div>
         );
       })}
