@@ -87,7 +87,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={handleLogout}
-              className="btn-dinemark shrink-0 gap-1 px-3 py-1.5 text-xs sm:gap-1.5 sm:px-4 sm:py-2 sm:text-sm"
+              className="btn-dinemark cursor-pointer shrink-0 gap-1 px-3 py-1.5 text-xs sm:gap-1.5 sm:px-4 sm:py-2 sm:text-sm"
             >
               <LogOut className="h-4 w-4" aria-hidden />
               Logout

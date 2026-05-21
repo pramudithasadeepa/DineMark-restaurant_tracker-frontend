@@ -137,7 +137,7 @@ export default function RestaurantCard({ restaurant, onDelete }: RestaurantCardP
           <button
             type="button"
             onClick={() => onDelete(restaurant.id)}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-red-500 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
+            className="cursor-pointer flex flex-1 items-center justify-center gap-2 rounded-lg border border-red-500 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
           >
             <Trash2 className="h-4 w-4" aria-hidden />
             Delete
