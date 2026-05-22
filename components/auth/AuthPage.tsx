@@ -112,11 +112,16 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
 
   return (
     <AuthSplitLayout>
-      <div className="flex h-full min-h-0 flex-col justify-center px-6 py-8 md:px-18 lg:px-20">
-        <AuthLogo />
-
+      <div
+        className={`flex h-full min-h-0 flex-col px-6 md:px-18 lg:px-20 ${
+          tab === "register"
+            ? "justify-center py-6"
+            : "justify-center py-8"
+        }`}
+      >
         {tab === "login" ? (
           <>
+            <AuthLogo />
             <h1 className="text-2xl font-bold text-slate-900">Welcome back</h1>
             <p className="mt-1 text-sm text-slate-500">
               Sign in to your food diary
@@ -207,9 +212,10 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
             </p>
           </>
         ) : (
-          <>
+          <div className="mx-auto w-full max-w-[400px]">
+            <AuthLogo className="mb-6" />
+
             <h1 className="text-2xl font-bold text-slate-900">
-              {" "}
               Welcome to DineMark
             </h1>
             <p className="mt-1 text-sm text-slate-500">
@@ -217,29 +223,30 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
             </p>
 
             {registerError && (
-              <div className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="mt-3 rounded-xl bg-red-50 px-4 py-2.5 text-sm text-red-700">
                 {registerError}
               </div>
             )}
 
-            <div className="mt-8 space-y-5">
+            <div className="mt-6 space-y-4">
               <GoogleSignInButton
+                className="py-2.5"
                 onClick={() =>
                   appToast.login.info("Google sign-in is not configured yet.")
                 }
               />
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <div className="h-px flex-1 bg-slate-200" />
                 <span className="text-xs text-slate-400">or</span>
                 <div className="h-px flex-1 bg-slate-200" />
               </div>
 
-              <form onSubmit={handleRegister} className="space-y-4">
+              <form onSubmit={handleRegister} className="space-y-3">
                 <div>
                   <label
                     htmlFor="name"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1 block text-sm font-medium text-slate-700"
                   >
                     Full name
                   </label>
@@ -247,7 +254,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                     id="name"
                     type="text"
                     placeholder="Your name"
-                    className="auth-input"
+                    className="auth-register-input"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     required
@@ -257,7 +264,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                 <div>
                   <label
                     htmlFor="register-email"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1 block text-sm font-medium text-slate-700"
                   >
                     Email
                   </label>
@@ -265,7 +272,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                     id="register-email"
                     type="email"
                     placeholder="you@example.com"
-                    className="auth-input"
+                    className="auth-register-input"
                     value={form.email}
                     onChange={(e) =>
                       setForm({ ...form, email: e.target.value })
@@ -277,12 +284,13 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                 <div>
                   <label
                     htmlFor="register-password"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1 block text-sm font-medium text-slate-700"
                   >
                     Password
                   </label>
                   <PasswordInput
                     id="register-password"
+                    inputClassName="auth-register-input"
                     value={form.password}
                     onChange={(v) => setForm({ ...form, password: v })}
                   />
@@ -291,12 +299,13 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                 <div>
                   <label
                     htmlFor="confirmPassword"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1 block text-sm font-medium text-slate-700"
                   >
                     Confirm password
                   </label>
                   <PasswordInput
                     id="confirmPassword"
+                    inputClassName="auth-register-input"
                     value={form.confirmPassword}
                     onChange={(v) => setForm({ ...form, confirmPassword: v })}
                   />
@@ -305,14 +314,14 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                 <button
                   type="submit"
                   disabled={registerLoading}
-                  className="btn-auth-primary mt-2"
+                  className="btn-auth-register mt-1"
                 >
                   {registerLoading ? "Creating account..." : "Create account"}
                 </button>
               </form>
             </div>
 
-            <p className="mt-8 text-center text-sm text-slate-500">
+            <p className="mt-6 text-center text-sm text-slate-500">
               Already have an account?{" "}
               <button
                 type="button"
@@ -322,7 +331,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                 Sign in
               </button>
             </p>
-          </>
+          </div>
         )}
       </div>
     </AuthSplitLayout>

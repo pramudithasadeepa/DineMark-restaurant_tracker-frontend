@@ -1,8 +1,12 @@
 import DineMarkLogo from '@/components/DineMarkLogo';
 
-export default function AuthLogo() {
+type AuthLogoProps = {
+  className?: string;
+};
+
+export default function AuthLogo({ className }: AuthLogoProps) {
   return (
-    <div className="mb-8">
+    <div className={className ?? "mb-8"}>
       <DineMarkLogo href="/" />
     </div>
   );

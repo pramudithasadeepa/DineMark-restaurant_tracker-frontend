@@ -8,6 +8,7 @@ type PasswordInputProps = {
   onChange: (value: string) => void;
   placeholder?: string;
   required?: boolean;
+  inputClassName?: string;
 };
 
 export default function PasswordInput({
@@ -16,6 +17,7 @@ export default function PasswordInput({
   onChange,
   placeholder = '••••••••',
   required = true,
+  inputClassName = 'auth-input',
 }: PasswordInputProps) {
   const [visible, setVisible] = useState(false);
 
@@ -25,7 +27,7 @@ export default function PasswordInput({
         id={id}
         type={visible ? 'text' : 'password'}
         placeholder={placeholder}
-        className="auth-input pr-11"
+        className={`${inputClassName} pr-11`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required={required}

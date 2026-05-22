@@ -2,14 +2,18 @@
 
 type GoogleSignInButtonProps = {
   onClick?: () => void;
+  className?: string;
 };
 
-export default function GoogleSignInButton({ onClick }: GoogleSignInButtonProps) {
+export default function GoogleSignInButton({
+  onClick,
+  className = '',
+}: GoogleSignInButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+      className={`flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 ${className}`}
     >
       <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden>
         <path
