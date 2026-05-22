@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { appToast } from "@/lib/appToast";
-import { login, register } from "@/lib/api";
+import { googleAuth, login, register } from "@/lib/api";
 import AuthSplitLayout from "@/components/auth/AuthSplitLayout";
 import AuthLogo from "@/components/auth/AuthLogo";
 import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
@@ -33,6 +33,47 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
   });
   const [registerError, setRegisterError] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogleSuccess = useCallback(
+    async (credential: string) => {
+      setGoogleLoading(true);
+      setLoginError("");
+      setRegisterError("");
+
+      const isRegister = tab === "register";
+
+      try {
+        const res = await googleAuth(credential);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        appToast.login.success(
+          isRegister
+            ? "Welcome to DineMark! Your Google account is ready."
+            : "Signed in with Google!",
+        );
+        router.push("/dashboard");
+      } catch (err: unknown) {
+        const message =
+          err && typeof err === "object" && "response" in err
+            ? (err as { response?: { data?: { message?: string } } }).response
+                ?.data?.message
+            : undefined;
+        const errorMessage =
+          message ||
+          (isRegister ? "Google sign-up failed" : "Google sign-in failed");
+        if (isRegister) {
+          setRegisterError(errorMessage);
+        } else {
+          setLoginError(errorMessage);
+        }
+        appToast.login.error(errorMessage);
+      } finally {
+        setGoogleLoading(false);
+      }
+    },
+    [router, tab],
+  );
 
   useEffect(() => {
     const urlTab = searchParams.get("tab");
@@ -133,10 +174,16 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
 
             <div className="mt-8 space-y-5">
               <GoogleSignInButton
-                onClick={() =>
-                  appToast.login.info("Google sign-in is not configured yet.")
-                }
+                key="google-login"
+                onSuccess={handleGoogleSuccess}
+                onError={(message) => appToast.login.error(message)}
+                className={googleLoading ? "pointer-events-none opacity-60" : ""}
               />
+              {googleLoading && (
+                <p className="text-center text-xs text-slate-500">
+                  Signing in with Google...
+                </p>
+              )}
 
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-slate-200" />
@@ -230,11 +277,16 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
 
             <div className="mt-6 space-y-4">
               <GoogleSignInButton
-                className="py-2.5"
-                onClick={() =>
-                  appToast.login.info("Google sign-in is not configured yet.")
-                }
+                key="google-register"
+                className={googleLoading ? "pointer-events-none opacity-60" : ""}
+                onSuccess={handleGoogleSuccess}
+                onError={(message) => appToast.login.error(message)}
               />
+              {googleLoading && (
+                <p className="text-center text-xs text-slate-500">
+                  Creating your account with Google...
+                </p>
+              )}
 
               <div className="flex items-center gap-3">
                 <div className="h-px flex-1 bg-slate-200" />

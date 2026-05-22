@@ -22,6 +22,9 @@ export const register = (data: { email: string; password: string; name: string }
 export const login = (data: { email: string; password: string }) =>
   api.post<AuthResponse>('/auth/login', data);
 
+export const googleAuth = (credential: string) =>
+  api.post<AuthResponse>('/auth/google', { credential });
+
 // Restaurant APIs
 export const getRestaurants = () =>
   api.get<Restaurant[]>('/restaurants');
