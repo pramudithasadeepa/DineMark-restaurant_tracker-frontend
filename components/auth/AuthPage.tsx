@@ -113,10 +113,8 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
   return (
     <AuthSplitLayout>
       <div
-        className={`flex h-full min-h-0 flex-col px-6 md:px-18 lg:px-20 ${
-          tab === "register"
-            ? "justify-center py-6"
-            : "justify-center py-8"
+        className={`flex min-h-0 flex-col px-6 md:px-18 lg:px-20 ${
+          tab === "register" ? "justify-center py-6" : "justify-center py-8"
         }`}
       >
         {tab === "login" ? (
@@ -177,7 +175,9 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
                       type="button"
                       className="text-sm font-medium text-[#F97316] hover:text-[#EA580C]"
                       onClick={() =>
-                        appToast.login.info("Password reset is not available yet.")
+                        appToast.login.info(
+                          "Password reset is not available yet.",
+                        )
                       }
                     >
                       Forgot password?
@@ -212,7 +212,7 @@ function AuthPageContent({ initialTab = "login" }: AuthPageProps) {
             </p>
           </>
         ) : (
-          <div className="mx-auto w-full max-w-[400px]">
+          <div className="mx-auto w-full max-w-[500px]">
             <AuthLogo className="mb-6" />
 
             <h1 className="text-2xl font-bold text-slate-900">
