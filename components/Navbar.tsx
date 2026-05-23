@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { LogOut } from "lucide-react";
 import DineMarkLogo from "@/components/DineMarkLogo";
 
@@ -13,22 +14,14 @@ const tabs = [
 ];
 
 export default function Navbar() {
-  const [userName, setUserName] = useState<string>("");
-  const router = useRouter();
   const pathname = usePathname();
+  const { data: session } = useSession();
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      const userData = JSON.parse(user);
-      setUserName(userData.name);
-    }
-  }, []);
+  const userName = session?.user?.name ?? "User";
+  const userImage = session?.user?.image;
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    router.push("/login");
+    signOut({ callbackUrl: "/login" });
   };
 
   const isActive = (path: string) => pathname === path;
@@ -51,12 +44,10 @@ export default function Navbar() {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-white/50 bg-gradient-to-br from-[#FFE8D6] via-[#FFF5EE] to-[#FFE4EC] shadow-sm">
         <div className="grid h-16 w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-3 sm:gap-4 sm:px-4">
-          {/* Left: logo */}
           <div className="min-w-0 justify-self-start overflow-hidden">
             <DineMarkLogo href="/dashboard" />
           </div>
 
-          {/* Center: navigation */}
           <nav
             className="flex shrink-0 items-center gap-10 whitespace-nowrap sm:gap-5"
             aria-label="Main"
@@ -70,7 +61,7 @@ export default function Navbar() {
                   className={`rounded-md px-2.5 py-1.5 text-xs font-bold transition sm:px-3.5 sm:text-sm ${
                     active
                       ? "bg-white/70 text-[#F97316] shadow-sm"
-                      : "text-black  hover:bg-white/50 hover:-translate-y-1 hover:text-orange-400 "
+                      : "text-black hover:bg-white/50 hover:-translate-y-1 hover:text-orange-400"
                   }`}
                 >
                   {tab.label}
@@ -79,15 +70,31 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right: user + logout */}
           <div className="flex min-w-0 shrink-0 items-center justify-end gap-2 whitespace-nowrap sm:gap-3">
+            {userImage ? (
+              <Image
+                src={userImage}
+                alt={userName}
+                width={32}
+                height={32}
+                className="h-8 w-8 shrink-0 rounded-full border border-orange-200 object-cover"
+                unoptimized
+              />
+            ) : (
+              <div
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-xs font-bold text-white"
+                aria-hidden
+              >
+                {userName.charAt(0).toUpperCase()}
+              </div>
+            )}
             <span className="max-w-[8rem] truncate text-xs text-black sm:max-w-[12rem] sm:text-sm md:max-w-none">
-              Welcome, {userName || "User"}!
+              Welcome, {userName}!
             </span>
             <button
               type="button"
               onClick={handleLogout}
-              className="btn-dinemark cursor-pointer shrink-0 gap-1 px-3 py-1.5 text-xs sm:gap-1.5 sm:px-4 sm:py-2 sm:text-sm"
+              className="btn-dinemark shrink-0 cursor-pointer gap-1 px-3 py-1.5 text-xs sm:gap-1.5 sm:px-4 sm:py-2 sm:text-sm"
             >
               <LogOut className="h-4 w-4" aria-hidden />
               Logout
@@ -95,7 +102,6 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-      {/* Spacer so fixed header does not cover page content */}
       <div className="h-16 shrink-0" aria-hidden="true" />
     </>
   );

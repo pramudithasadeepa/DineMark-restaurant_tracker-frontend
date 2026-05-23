@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { appToast } from '@/lib/appToast';
@@ -32,16 +31,9 @@ export default function RestaurantDashboard({
   const [cuisineFilter, setCuisineFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState('');
   const [statusFilterLocal, setStatusFilterLocal] = useState('');
-  const router = useRouter();
-
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-      return;
-    }
     fetchRestaurants();
-  }, [router]);
+  }, []);
 
   const fetchRestaurants = async () => {
     try {

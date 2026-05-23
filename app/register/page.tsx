@@ -1,5 +1,5 @@
 import AuthPage from '@/components/auth/AuthPage';
 
-export default function Register() {
+export default function RegisterPage() {
   return <AuthPage initialTab="register" />;
 }
