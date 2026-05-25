@@ -6,7 +6,7 @@ type AuthLogoProps = {
 
 export default function AuthLogo({ className }: AuthLogoProps) {
   return (
-    <div className={className ?? "mb-8"}>
+    <div className={className ?? "mb-4"}>
       <DineMarkLogo href="/" />
     </div>
   );
