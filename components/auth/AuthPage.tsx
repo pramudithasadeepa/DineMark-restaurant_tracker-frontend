@@ -80,9 +80,35 @@ function AuthPageContent({ initialTab = 'login' }: { initialTab?: AuthTab }) {
       await registerWithEmail(form.email, form.password, form.name);
       appToast.login.success('Account created! Please sign in.');
       setTab('login');
-    } catch {
-      setRegisterError('Registration failed');
-      appToast.login.error('Registration failed');
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      let errorMessage = 'Registration failed. Please try again.';
+      
+      // Firebase specific errors
+      if (error?.code) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            errorMessage = 'An account with this email already exists. Please log in.';
+            break;
+          case 'auth/invalid-email':
+            errorMessage = 'Please enter a valid email address.';
+            break;
+          case 'auth/weak-password':
+            errorMessage = 'Password is too weak. Please use at least 6 characters.';
+            break;
+          case 'auth/operation-not-allowed':
+            errorMessage = 'Email/password accounts are not enabled. Please contact support.';
+            break;
+        }
+      } else if (error?.response?.data?.message) {
+        // Backend specific errors
+        errorMessage = error.response.data.message;
+      } else if (error instanceof Error && error.message) {
+        errorMessage = error.message;
+      }
+
+      setRegisterError(errorMessage);
+      appToast.login.error(errorMessage);
     } finally {
       setRegisterLoading(false);
     }
