@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import dinemarkLogo from '@/app/DineMark_logo.png';
 
 type DineMarkLogoProps = {
   href?: string;
@@ -16,8 +18,15 @@ export default function DineMarkLogo({
 
   const logo = (
     <span className={`inline-flex items-center gap-2 ${className}`}>
-      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FFF0E6] text-base">
-        🍽️
+      <span className="relative h-12 w-12 shrink-0">
+        <Image
+          src={dinemarkLogo}
+          alt="DineMark logo"
+          fill
+          className="rounded-lg object-contain"
+          sizes="36px"
+          priority
+        />
       </span>
       <span className={`text-xl font-bold tracking-tight ${dineColor}`}>
         Dine<span className={markColor}>Mark</span>

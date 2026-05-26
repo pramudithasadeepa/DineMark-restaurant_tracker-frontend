@@ -1,23 +1,40 @@
 'use client';
 
 import Link from 'next/link';
+import {
+  Check,
+  ChevronRight,
+  ClipboardList,
+  Map,
+  Sparkles,
+  Star,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import LandingHeader from '@/components/LandingHeader';
 
-const features = [
+const features: {
+  icon: LucideIcon;
+  iconClass: string;
+  title: string;
+  description: string;
+}[] = [
   {
-    icon: '📝',
+    icon: ClipboardList,
+    iconClass: 'text-[#FF4D20]',
     title: 'Log Every Meal',
     description:
       'Keep a record of every restaurant you visit — what you ate, when, and with whom.',
   },
   {
-    icon: '⭐',
+    icon: Star,
+    iconClass: 'text-amber-500 fill-amber-500',
     title: 'Rate & Review',
     description:
       'Rate your experience, write reviews, and remember what dishes you loved most.',
   },
   {
-    icon: '🗺️',
+    icon: Map,
+    iconClass: 'text-[#E85D04]',
     title: 'Wishlist & Explore',
     description: 'Save restaurants you want to try and never forget a food spot again.',
   },
@@ -56,7 +73,7 @@ export default function WelcomePage() {
       <section className="px-6 pb-20 pt-12 text-center md:px-8 md:pb-28 md:pt-16">
         <div className="mx-auto max-w-4xl">
           <p className="mb-8 inline-flex items-center gap-2 rounded-full bg-[#FFE8D6] px-4 py-2 text-sm font-medium text-[#E85D04]">
-            <span aria-hidden>✨</span>
+            <Sparkles className="h-4 w-4" aria-hidden />
             Your Food Journey Starts Here
           </p>
 
@@ -74,7 +91,7 @@ export default function WelcomePage() {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link href="/register" className="btn-dinemark gap-1 px-8 py-4 text-base">
               Start your diary — it&apos;s free
-              <span aria-hidden>›</span>
+              <ChevronRight className="h-5 w-5" aria-hidden />
             </Link>
             <Link href="/login" className="btn-dinemark-outline min-w-[140px]">
               Sign in
@@ -84,7 +101,7 @@ export default function WelcomePage() {
           <ul className="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-8">
             {stats.map((stat) => (
               <li key={stat} className="flex items-center gap-2 text-sm text-slate-600">
-                <span className="font-bold text-[#FF4D20]">✓</span>
+                <Check className="h-4 w-4 font-bold text-[#FF4D20]" strokeWidth={3} aria-hidden />
                 {stat}
               </li>
             ))}
@@ -105,18 +122,19 @@ export default function WelcomePage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition hover:shadow-md"
-              >
-                <span className="text-4xl" role="img" aria-hidden>
-                  {feature.icon}
-                </span>
-                <h3 className="mt-5 text-xl font-bold text-slate-900">{feature.title}</h3>
-                <p className="mt-3 leading-relaxed text-slate-600">{feature.description}</p>
-              </div>
-            ))}
+            {features.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={feature.title}
+                  className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm transition hover:shadow-md"
+                >
+                  <Icon className={`h-10 w-10 ${feature.iconClass}`} strokeWidth={1.75} aria-hidden />
+                  <h3 className="mt-5 text-xl font-bold text-slate-900">{feature.title}</h3>
+                  <p className="mt-3 leading-relaxed text-slate-600">{feature.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios';
-import { Restaurant, RestaurantInput, DashboardStats, AuthResponse, User } from '../types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -7,38 +6,40 @@ const api: AxiosInstance = axios.create({
   baseURL: API_URL,
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+import { getFirebaseToken } from './firebaseClient';
+
+api.interceptors.request.use(
+  async (config) => {
+    try {
+      const token = await getFirebaseToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      console.error('Error fetching firebase token', error);
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
-// Auth APIs
-export const register = (data: { email: string; password: string; name: string }) =>
-  api.post<AuthResponse>('/auth/register', data);
-
-export const login = (data: { email: string; password: string }) =>
-  api.post<AuthResponse>('/auth/login', data);
-
-// Restaurant APIs
-export const getRestaurants = () =>
-  api.get<Restaurant[]>('/restaurants');
-
-export const getRestaurant = (id: number) =>
-  api.get<Restaurant>(`/restaurants/${id}`);
-
-export const addRestaurant = (data: RestaurantInput) =>
-  api.post<Restaurant>('/restaurants', data);
-
-export const updateRestaurant = (id: number, data: Partial<RestaurantInput>) =>
-  api.put(`/restaurants/${id}`, data);
-
-export const deleteRestaurant = (id: number) =>
-  api.delete(`/restaurants/${id}`);
-
-export const getDashboardStats = () =>
-  api.get<DashboardStats>('/restaurants/stats');
+export const getRestaurants = () => api.get('/restaurants');
+export const getRestaurant = (id: number) => api.get(`/restaurants/${id}`);
+export const addRestaurant = (data: any) => api.post('/restaurants', data);
+export const updateRestaurant = (id: number, data: any) => api.put(`/restaurants/${id}`, data);
+export const deleteRestaurant = (id: number) => api.delete(`/restaurants/${id}`);
+export const getDashboardStats = () => api.get('/restaurants/stats');
 
 export default api;

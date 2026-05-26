@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import { appToast } from '@/lib/appToast';
 import { getRestaurants, deleteRestaurant } from '@/lib/api';
 import { Restaurant } from '@/types';
 import StatCards from '@/components/dashboard/StatCards';
@@ -15,12 +16,14 @@ type RestaurantDashboardProps = {
   statusFilter: StatusFilterMode;
   sectionTitle: string;
   emptyMessage: string;
+  showStatCards?: boolean;
 };
 
 export default function RestaurantDashboard({
   statusFilter,
   sectionTitle,
   emptyMessage,
+  showStatCards = false,
 }: RestaurantDashboardProps) {
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,16 +31,9 @@ export default function RestaurantDashboard({
   const [cuisineFilter, setCuisineFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState('');
   const [statusFilterLocal, setStatusFilterLocal] = useState('');
-  const router = useRouter();
-
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-      return;
-    }
     fetchRestaurants();
-  }, [router]);
+  }, []);
 
   const fetchRestaurants = async () => {
     try {
@@ -104,9 +100,12 @@ export default function RestaurantDashboard({
   ]);
 
   const handleDelete = async (id: number) => {
-    if (confirm('Are you sure you want to delete this restaurant?')) {
+    try {
       await deleteRestaurant(id);
+      appToast.delete.success('Restaurant deleted successfully!');
       fetchRestaurants();
+    } catch {
+      appToast.delete.error('Failed to delete restaurant. Please try again.');
     }
   };
 
@@ -124,9 +123,9 @@ export default function RestaurantDashboard({
   return (
     <div className="min-h-full bg-[#FFF9F2]">
       <div className="mx-auto max-w-6xl px-4 py-8 md:px-6">
-        <StatCards stats={stats} />
+        {showStatCards && <StatCards stats={stats} />}
 
-        <div className="mt-6">
+        <div className={showStatCards ? 'mt-6' : undefined}>
           <SearchFilters
             searchTerm={searchTerm}
             cuisineFilter={cuisineFilter}
@@ -145,7 +144,7 @@ export default function RestaurantDashboard({
           <h2 className="text-2xl font-bold text-slate-900">{sectionTitle}</h2>
           <Link
             href="/restaurants/add"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[#F97316] px-5 py-2.5 text-sm font-semibold text-[#F97316] transition hover:bg-[#FFF0E6]"
+            className="btn-dinemark gap-2 px-5 py-2.5 text-sm"
           >
             <span className="text-lg leading-none">+</span>
             Add restaurant
@@ -157,9 +156,10 @@ export default function RestaurantDashboard({
             <p className="text-slate-500">{emptyMessage}</p>
             <Link
               href="/restaurants/add"
-              className="mt-4 inline-block text-sm font-semibold text-[#F97316] hover:underline"
+              className="mt-4 inline-flex items-center justify-center gap-1 text-sm font-semibold text-[#F97316] hover:underline"
             >
-              Add your first restaurant →
+              Add your first restaurant
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>
         ) : (

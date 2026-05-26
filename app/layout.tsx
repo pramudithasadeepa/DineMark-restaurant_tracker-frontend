@@ -3,14 +3,15 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Toaster } from 'react-hot-toast';
+import AppToastContainer from '@/components/AppToastContainer';
+import { AuthProvider } from '@/contexts/AuthContext';
+import AuthGuard from '@/components/auth/AuthGuard';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'DineMark — Your Personal Restaurant Diary',
-  description:
-    'Every meal you love, dated and remembered. Track restaurants, save favorites, and rediscover your culinary adventures.',
+  title: 'DineMark',
+  description: 'Every meal you love, dated and remembered.',
 };
 
 export default function RootLayout({
@@ -20,11 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex min-h-screen flex-col`}>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <Toaster position="top-right" />
+      <body className={`${inter.className} flex min-h-screen flex-col`} suppressHydrationWarning>
+        <AuthProvider>
+          <AuthGuard>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <AppToastContainer />
+          </AuthGuard>
+        </AuthProvider>
       </body>
     </html>
   );

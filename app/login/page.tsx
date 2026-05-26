@@ -1,5 +1,5 @@
 import AuthPage from '@/components/auth/AuthPage';
 
-export default function Login() {
+export default function LoginPage() {
   return <AuthPage initialTab="login" />;
 }

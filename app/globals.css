@@ -43,7 +43,65 @@
     @apply w-full rounded-xl border-0 bg-slate-100 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316]/40;
   }
 
+  /* Register form — slightly smaller than login, not overly compact */
+  .auth-register-input {
+    @apply w-full rounded-xl border-0 bg-slate-100 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316]/40;
+  }
+
   .btn-auth-primary {
     @apply w-full rounded-xl bg-gradient-to-r from-[#F97316] to-[#EF4444] py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:opacity-95 disabled:opacity-50;
+  }
+
+  .btn-auth-register {
+    @apply w-full rounded-xl bg-gradient-to-r from-[#F97316] to-[#EF4444] py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:opacity-95 disabled:opacity-50;
+  }
+
+  /* Toast variants — blue edit, red delete, green add, orange login */
+  .Toastify__toast.toast-edit {
+    background-color: #3b82f6;
+    color: #fff;
+  }
+
+  .Toastify__toast.toast-edit .Toastify__progress-bar,
+  .Toastify__toast.toast-edit .Toastify__progress-bar--bg {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .Toastify__toast.toast-delete {
+    background-color: #ef4444;
+    color: #fff;
+  }
+
+  .Toastify__toast.toast-delete .Toastify__progress-bar,
+  .Toastify__toast.toast-delete .Toastify__progress-bar--bg {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .Toastify__toast.toast-add {
+    background-color: #22c55e;
+    color: #fff;
+  }
+
+  .Toastify__toast.toast-add .Toastify__progress-bar,
+  .Toastify__toast.toast-add .Toastify__progress-bar--bg {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .Toastify__toast.toast-login {
+    background-color: #f97316;
+    color: #fff;
+  }
+
+  .Toastify__toast.toast-login .Toastify__progress-bar,
+  .Toastify__toast.toast-login .Toastify__progress-bar--bg {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .Toastify__toast.toast-edit .Toastify__close-button,
+  .Toastify__toast.toast-delete .Toastify__close-button,
+  .Toastify__toast.toast-add .Toastify__close-button,
+  .Toastify__toast.toast-login .Toastify__close-button {
+    color: #fff;
+    opacity: 0.8;
   }
 }
